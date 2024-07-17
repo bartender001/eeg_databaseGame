@@ -11,7 +11,7 @@ def get_prediction(sample):
     # Load the model
     model = joblib.load('my_model.pkl')  
     
-    # Reshape sample if necessary and convert to numpy array
+    # Reshape sample 
     sample = sample.values.reshape(1, -1)  
     prediction = model.predict(sample)
     
@@ -33,11 +33,12 @@ playerImg = pygame.image.load('spaceship.png')
 enemyImg = pygame.image.load('enemy.png')
 backgroundImg = pygame.image.load('bg.jpg')  
 
-# Score variable
+# Score/collisions
 score = 0
 font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Spaceship class to handle independent movement and data reading
+
 class Spaceship:
     def __init__(self, x, y):
         self.x = x
@@ -52,7 +53,7 @@ class Spaceship:
                 sample = x_test.iloc[self.index]  
                 prediction = get_prediction(sample)
                 
-                # Adjust player movement based on prediction
+                ##
                 action = prediction.argmax()  
                 
                 if action == 0:
@@ -71,7 +72,7 @@ class Spaceship:
                 self.x = 736
 
             self.x_change = 0
-            time.sleep(0.1)  # Adjust the speed of reading data and movement
+            time.sleep(0.1)  # Adjust the speed of reading data 
 
     def stop(self):
         self.alive = False
@@ -91,7 +92,7 @@ def show_score(x, y):
 
 running = True
 
-# Create spaceship object and start its movement and data reading in a separate thread
+# created object and threading
 spaceship = Spaceship(370, 480)
 spaceship_thread = threading.Thread(target=spaceship.move_and_read_data)
 spaceship_thread.start()
@@ -110,7 +111,7 @@ while running:
         enemyY = 0
         enemyX = random.randint(0, 736)
 
-    # Get rectangles for collision detection
+    # rectangular collision
     player_rect = pygame.Rect(spaceship.x, spaceship.y, playerImg.get_width(), playerImg.get_height())
     enemy_rect = pygame.Rect(enemyX, enemyY, enemyImg.get_width(), enemyImg.get_height())
 
